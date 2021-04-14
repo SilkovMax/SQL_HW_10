@@ -1,0 +1,56 @@
+CREATE TABLE auto (
+    id_auto INTEGER NOT NULL UNIQUE,
+    brand_auto VARCHAR(100) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    status VARCHAR(100) NOT NULL,
+  	PRIMARY KEY (id_auto) 
+  );
+  
+ 
+INSERT INTO auto VALUES (1, 'Lada', 'Russia','good'); 
+INSERT INTO auto VALUES (2, 'BMW', 'Germany','best');
+INSERT INTO auto VALUES (3, 'Opel', 'Germany','bad');
+INSERT INTO auto VALUES (4, 'Honda', 'Japan','good');
+INSERT INTO auto VALUES (5, 'Ford', 'USA','good');
+INSERT INTO auto VALUES (6, 'Kargus', 'Russia','best');
+INSERT INTO auto VALUES (7, 'Merc', 'Germany','good');
+INSERT INTO auto VALUES (8, 'Jeep', 'USA','bad');
+INSERT INTO auto VALUES (9, 'Citroen', 'Germany','good');
+INSERT INTO auto VALUES (10, 'Calina', 'Russia','best');
+INSERT INTO auto VALUES (11, 'Kraz', 'Germany','good');
+INSERT INTO auto VALUES (12, 'Hindai', 'Japan','good');
+INSERT INTO auto VALUES (13, 'Reno', 'USA','good');
+INSERT INTO auto VALUES (14, 'Vaz', 'Russia','best');
+INSERT INTO auto VALUES (15, 'Zil', 'Russia','bad');
+ 
+ 
+ 
+CREATE TABLE trades (
+    id INTEGER NOT NULL UNIQUE,
+    id_auto INTEGER NOT NULL UNIQUE,
+    name_customer VARCHAR(100) NOT NULL,
+    name_seller VARCHAR(100) NOT NULL,
+    date_trades DATE NOT NULL,
+    price INTEGER NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_auto) REFERENCES auto (id_auto)
+    
+  );
+  
+  
+  INSERT INTO trades VALUES (1, 10, 'Ivan', 'Pety', '2020-12-12',10500000); 
+  INSERT INTO trades VALUES (2, 9, 'Max', 'Nasty', '2021-08-14',2501000);   
+  INSERT INTO trades VALUES (3, 8, 'Bill', 'Pety', '2020-12-06',34234);
+  INSERT INTO trades VALUES (4, 7, 'Evan', 'Kate', '2020-12-12',87865); 
+  INSERT INTO trades VALUES (5, 6, 'Carl', 'Pety', '2020-11-11',645400); 
+  INSERT INTO trades VALUES (6, 5, 'Smitt', 'John', '2020-08-12',250000); 
+  INSERT INTO trades VALUES (7, 4, 'Ivan', 'Pety', '2021-08-02',23000); 
+  INSERT INTO trades VALUES (8, 3, 'Ivan', 'Keni', '2020-10-11',250000000); 
+  INSERT INTO trades VALUES (9, 2, 'Carl', 'Pety', '2029-12-12',450000); 
+  INSERT INTO trades VALUES (10, 1, 'John', 'Slava', '2018-08-08',255000); 
+
+
+
+ select brand_auto from auto join trades on auto.id_auto=trades.id_auto where price in (select min(price) from trades);
+ select count(id) as count_trades from trades where month(date_trades)=8;
+ select name_seller, sum(price) as allSum from trades  group by name_seller having allSum>=4000000 order by allSum DESC;
